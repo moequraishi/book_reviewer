@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css" integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B" crossorigin="anonymous">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'belt_reviewer/styles/main.css' %}">
+
+    <title>Belt Reviewer by Moe Quraishi</title>
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-light bg-light justify-content-between">
+            <a class="navbar-brand"></a>
+            <span class="navbar-text">
+                <a href="/dashboard">Home</a>
+                <a href="/logout">Logout</a>
+            </span>
+        </nav>
+    </header>
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                {% if messages %}
+                <div class="messages">
+                    {% for message in messages %}
+                    <p {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</p>
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <h2>{{ book.title }}</h2>
+                <h3>{{ book.author.name }}</h3>
+
+                {% for review in book.reviews.all %}
+                    <div class="review">
+                        <p>Rating: {{ review.rating }} stars</p>
+                        <p><a href="#">{{ review.user.first_name }}</a> Says: {{ review.content }} </p>
+                        <p>Posted on: {{ review.created_at }}</p>
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="col-md-6 addReviews">
+                <form action="/books/create/{{book.id}}" method="POST">
+                    {% csrf_token %}
+                    <p>Review:</p>
+                    <textarea name="review" cols="30" rows="10"></textarea>
+
+                    <p>Rating:</p>
+                    <select name="rating" >
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                    </select>
+                    <br>
+                    <div class="form-group">
+                        <input type="submit" class="btn btn-primary form-control" value="Submit">
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/js/bootstrap.min.js" integrity="sha384-o+RDsa0aLu++PJvFqy8fFScvbHFLtbvScb8AjopnFD+iEQ7wo/CG0xlczd+2O/em" crossorigin="anonymous"></script>
+</body>
+</html>

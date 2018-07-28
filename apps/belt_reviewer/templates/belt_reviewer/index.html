@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'belt_reviewer/styles/main.css' %}">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css" integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B" crossorigin="anonymous">
+
+    <title>Belt Reviewer by Moe Quraishi</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome.</h1>
+        <div class="row">
+            <div class="col-12">
+                {% if messages %}
+                <div class="messages">
+                    {% for message in messages %}
+                    <p {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</p>
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                 <h3>Register.</h3>
+                    <br>
+                <form action="/register" method="post">
+                    {% csrf_token %}
+
+                    <div class="form-group">
+                        <label for="first_name">First name:</label>
+                        <input class="form-control" type="text" name="first_name" id="first_name">
+                    </div>
+                    <div class="form-group">
+                        <label for="last_name">Last name:</label>
+                        <input class="form-control" type="text" name="last_name" id="last_name">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email:</label>
+                        <input class="form-control" type="email" name="email" id="email">
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input class="form-control" type="password" name="password" id="password">
+                    </div>
+                    <div class="form-group">
+                        <label for="confirm_pass">Confirm password</label>
+                        <input class="form-control" type="password" name="confirm_pass" id="confirm_pass">
+                    </div>
+                    <input class="btn btn-primary" type="submit" value="Register">
+                </form>
+            </div>
+            <div class="col-md-6">
+                <h3>Login.</h3>
+                <br>
+                <form action="/books" method="post">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="email">Email: </label>
+                        <input class="form-control" type="text" name="email" placeholder="email">
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input class="form-control" type="password" name="password" placeholder="password">
+                    </div>
+
+                    <input class="btn btn-success" type="submit" value="Login">
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/js/bootstrap.min.js" integrity="sha384-o+RDsa0aLu++PJvFqy8fFScvbHFLtbvScb8AjopnFD+iEQ7wo/CG0xlczd+2O/em" crossorigin="anonymous"></script>
+</body>
+</html>
